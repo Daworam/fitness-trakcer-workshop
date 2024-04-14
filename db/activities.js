@@ -27,7 +27,12 @@ const getActivities = async () => {
 
 const getOneActivity = async (id) => {
   try{
-    
+    const { rows: [activity] } = await client.query(`
+      SELECT * FROM activities
+      WHERE id = ${id};
+    `);
+
+    return activity;
   }catch(error){
     console.log(error);
   }
@@ -37,4 +42,5 @@ getOneActivity(1);
 module.exports = {
   createActivity,
   getActivities,
+  getOneActivity
 }

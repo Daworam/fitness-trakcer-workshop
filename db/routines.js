@@ -25,7 +25,20 @@ const getRoutines = async () => {
   }
 };
 
+const getOneRoutine = async (id) => {
+  try{
+    const { rows: [ routine ]} = await client.query(`
+    SELECT * FROM routines
+    WHERE id = ${id};
+    `);
+    return routine;
+  }catch(error){
+    console.log(error);
+  }
+}
+
 module.exports = {
   createRoutine,
-  getRoutines
+  getRoutines,
+  getOneRoutine
 }
