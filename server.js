@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const { getActivities, createActivity, getOneActivity } = require('./db/activities.js');
-const { getRoutines, createRoutine, getOneRoutine } = require('./db/routines.js');
+const { getRoutines, createRoutine, getOneRoutine, deleteRoutine } = require('./db/routines.js');
 const { createActivitiesRoutines } = require('./db/activities_routines.js');
 
 const client = require('./db/client.js');
@@ -82,6 +82,16 @@ app.post('/api/v1/activities_routines', async (req, res, next) => {
     next(error);
   }
 });
+
+app.delete('/api/v1/routines/:id', async (req, res, next) => {
+  const {id} = req.params;
+  try{
+    const deletedRoutine = await deleteRoutine(id);
+    res.send(deletedRoutine);
+  }catch(error){
+    next(error);
+  }
+})
 
 app.listen(8080, ()=>{
   console.log("fitness tracker listening on 8080")
