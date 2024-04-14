@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const { getActivities, createActivity, getOneActivity } = require('./db/activities.js');
+const { getActivities, createActivity, getOneActivity, deleteActivity } = require('./db/activities.js');
 const { getRoutines, createRoutine, getOneRoutine, deleteRoutine } = require('./db/routines.js');
 const { createActivitiesRoutines } = require('./db/activities_routines.js');
 
@@ -88,6 +88,16 @@ app.delete('/api/v1/routines/:id', async (req, res, next) => {
   try{
     const deletedRoutine = await deleteRoutine(id);
     res.send(deletedRoutine);
+  }catch(error){
+    next(error);
+  }
+});
+
+app.delete('/api/v1/activities/:id', async (req, res, next) => {
+  const {id} = req.params;
+  try{
+    const deletedActivity = await deleteActivity(id);
+    res.send(deletedActivity);
   }catch(error){
     next(error);
   }

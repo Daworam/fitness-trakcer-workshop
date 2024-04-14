@@ -38,9 +38,24 @@ const getOneActivity = async (id) => {
   }
 };
 
+const deleteActivity = async (id) => {
+  try{
+    const {rows} = await client.query(`
+    DELETE FROM activities_routines
+    WHERE id = ${id};
+    
+    DELETE FROM activities
+    WHERE id = ${id};
+    `);
+  }catch(error){
+    console.log(error);
+  }
+}
+
 getOneActivity(1);
 module.exports = {
   createActivity,
   getActivities,
-  getOneActivity
+  getOneActivity,
+  deleteActivity
 }
